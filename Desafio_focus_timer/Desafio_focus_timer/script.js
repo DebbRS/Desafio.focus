@@ -8,7 +8,9 @@ const buttonShopSound = document.querySelector(".sounds_shop");
 const buttonFireplaceSound = document.querySelector(".sounds_fireplace");
 const minutesDisplay = document.querySelector(".minutes");
 const secondsDisplay = document.querySelector(".seconds");
-
+const buttonToogleDarkMode = document.querySelector("#dark_mode");
+const buttonToogleLightMode = document.querySelector("#light_mode");
+const container = document.querySelector(".container");
 let timerTimeOut;
 let minutes = Number(minutesDisplay.textContent);
 
@@ -49,6 +51,35 @@ function CreateEvents() {
   buttonFireplaceSound.addEventListener("click", function () {
     soundClick(buttonFireplaceSound, soundFirePlace);
   });
+
+  buttonToogleDarkMode.addEventListener("click", function() {
+    container.classList.add("dark_mode");
+    buttonToogleDarkMode.classList.add("hide");
+    buttonToogleLightMode.classList.remove("hide");
+    buttonRainSound.classList.add("card_dark_mode");
+    buttonFireplaceSound.classList.add("card_dark_mode");
+    buttonForestSound.classList.add("card_dark_mode");
+    buttonShopSound.classList.add("card_dark_mode");
+    buttonForestSound.classList.add("card_dark_mode_background");
+    buttonFireplaceSound.classList.add("card_dark_mode_background");
+    buttonRainSound.classList.add("card_dark_mode_background");
+    buttonShopSound.classList.add("card_dark_mode_background");
+  })
+
+  buttonToogleLightMode.addEventListener("click", function() {
+    container.classList.remove("dark_mode");
+    buttonToogleDarkMode.classList.remove("hide");
+    buttonToogleLightMode.classList.add("hide");
+    buttonRainSound.classList.remove("card_dark_mode");
+    buttonFireplaceSound.classList.remove("card_dark_mode");
+    buttonForestSound.classList.remove("card_dark_mode");
+    buttonShopSound.classList.remove("card_dark_mode");
+    buttonForestSound.classList.remove("card_dark_mode_background");
+    buttonFireplaceSound.classList.remove("card_dark_mode_background");
+    buttonRainSound.classList.remove("card_dark_mode_background");
+    buttonShopSound.classList.remove("card_dark_mode_background");
+
+  })
 }
 
 function countdown() {
@@ -85,13 +116,21 @@ function updateMinutes(newMinutes) {
 }
 
 function soundClick(button, sound) {
-  if (button.classList.contains("sounds_icon_checked")) {
-    button.classList.remove("sounds_icon_checked", "sounds_card_checked");
+  var is_darkMode = container.classList.contains("dark_mode");
+  console.log(is_darkMode)
+  if (button.classList.contains("sounds_icon_checked") || button.classList.contains("sounds_icon_checked_dark")) {
+    button.classList.remove("sounds_icon_checked", "sounds_card_checked", "sounds_icons_checked_dark", "sounds_card_checked_dark");
     sound.pause();
     return;
   }
   clearAllSound();
-  button.classList.add("sounds_icon_checked", "sounds_card_checked");
+  if (is_darkMode) {
+    button.classList.add("sounds_icon_checked_dark", "sounds_card_checked_dark");
+  }
+  else {
+    button.classList.add("sounds_icon_checked", "sounds_card_checked");
+  }
+  
   sound.play();
 }
 
